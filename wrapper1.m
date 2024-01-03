@@ -5,12 +5,9 @@
 % set parameter values
 g = .1; %growth of plant proportional to Nitrogen pool
 a = .05; %allocation of Carbon to Carbon pool
-s = 0.001; %senesence of tree biomass
+s = 0.01; %senesence of tree biomass
 l = 0.005; %loss of carbon pool to environment
-r1_A = 0; %reward rate to fungus 1 in environment type A
-r1_B = 0.2; %reward rate to fungus 1 in environment type B
-r2_A = 0.2; %reward rate to fungus 2 in environment type A
-r2_B = 0; %reward rate to fungus 2 in environment type B
+
 e1 = 0.01; %efficiency of fungus 1 carbon uptake
 e2 = 0.01; %efficiency of fungus 2 carbon uptake
 m1 = 0.01; %fungus 1 mortality
@@ -25,6 +22,12 @@ mN = .1; %loss of Nitrogen from tree's stores
 Ntot = 10; %total nitrogen = N + Ns
 
 
+    r1_A = .2;
+    r1_B = .2;
+    r2_A = .2;
+    r2_B = .2;
+
+
 % Initial conditions
 x0(1) = 1; %P
 x0(2) = 1; %C
@@ -34,7 +37,7 @@ x0(5) = 1; %N
 
 
 % Set timespan and environment conditions during timespan 
-tspan = [1 3000]; 
+tspan = [1 5000]; 
 
 envA = @(t) mod(floor(t/(365/2)), 2); %365 day period with half A and half B
 
@@ -44,7 +47,7 @@ envA = @(t) mod(floor(t/(365/2)), 2); %365 day period with half A and half B
 
 % plot
 
-figure
+%figure
 subplot(2, 1,1)
 b = plot(tout, yout);
 b(1).Color = [0 .9 .3]; 
@@ -88,6 +91,15 @@ envA_treat = @(t) discretize(rem(t, env_period), [0 prop_A*env_period env_period
 
 %% 
 
+
+% Initial conditions
+x0(1) = 1; %P
+x0(2) = 1; %C
+x0(3) = 1; %F1
+x0(4) = 1; %F2
+x0(5) = 1; %N
+
+
 %initialize results
 propA_vals = 0:.02:1; 
 results = nan(3,length(propA_vals)); 
@@ -97,7 +109,7 @@ for i = 1:length(propA_vals)
     envA_treat = @(t) discretize(rem(t, env_period), [0 propA*env_period env_period]) == 1 ; 
 
     %first run simulation for reward strategy 100% fungus 1 in both environments
-    sol = ode45(@(t, x) leaky_or_loyal(t, x, g, a, s, l, 1, 1, 0, 0, e1, e2, m1, m2, d1, d2, u1_A, u1_B, u2_A, u2_B, mN, Ntot, envA_treat), tspan, x0);
+    sol = ode45(@(t, x) leaky_or_loyal(t, x, g, a, s, l, .6, .6, .4, .4, e1, e2, m1, m2, d1, d2, u1_A, u1_B, u2_A, u2_B, mN, Ntot, envA_treat), tspan, x0);
     final_res = deval(sol, tspan(2)-env_period*3:tspan(2));
     results(1,i) = mean(final_res(1,:)); 
 
@@ -123,20 +135,30 @@ xlabel('Proportion of time in environment A')
 %% now vary reward strategy in fixed environmental regime
 
 %initialize results
-leakiness_vals = 0:.1:1; 
+leakiness_vals = 0:.05:1; 
 env_period_vals = [180 365 365*2 365*3];
 propA = .5; 
 results = nan(length(env_period_vals), length(leakiness_vals)); 
 
 tspan = [1 8000]; 
 
+rtot = .2; 
+
+% Initial conditions
+x0(1) = 1; %P
+x0(2) = 1; %C
+x0(3) = 2; %F1
+x0(4) = 2; %F2
+x0(5) = 1; %N
+
+
 for i = 1:length(leakiness_vals)
     leakiness = leakiness_vals(i);
 
-    r1_A = 1-leakiness;
-    r1_B = leakiness; 
-    r2_A = leakiness; 
-    r2_B = 1-leakiness; 
+    r1_A = (1-leakiness).*rtot;
+    r1_B = leakiness*rtot; 
+    r2_A = leakiness*rtot; 
+    r2_B = (1-leakiness)*rtot; 
 
     for j = 1:length(env_period_vals)
 
@@ -275,7 +297,7 @@ end
 u1_A = 1; %uptake of Nitrogen by fungus 1 in environment type A
 u1_B = 0; %uptake of Nitrogen by fungus 1 in environment type B
 u2_A = 0; %uptake of Nitrogen by fungus 2 in environment type A
-u2_B = .6; %uptake of Nitrogen by fungus 1 in environment type B
+u2_B = 1; %uptake of Nitrogen by fungus 1 in environment type B
 
 %initialize results
 propA_vals = 0:.02:1; 
