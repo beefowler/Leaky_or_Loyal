@@ -99,6 +99,8 @@ difference_val = 1;
 
 env_period_vals = [4*365];
 
+leakiness_vals = 0:.05:1; 
+
 results = nan(length(env_period_vals), length(leakiness_vals)); 
 
 % Initial conditions
@@ -122,7 +124,6 @@ optimal_leakinesss_sol = [];
 optimal_leakiness_biomass = 0; 
 optimal_leakiness_value = []; 
 
-leakiness_vals = 0:.05:1; 
 results = nan(1, length(leakiness_vals));
 for i = 1:length(leakiness_vals)
     leakiness = leakiness_vals(i);
