@@ -55,7 +55,7 @@ clf
 
     count = 0; 
     rtot = .2; 
-    leakiness_vals = [.75 .25 0]; 
+    leakiness_vals = [0 .25 .75]; 
 
 for col = 1:3
     leakiness = leakiness_vals(col)
@@ -106,7 +106,7 @@ end
 subplot(2,3,col)
 plot(propA_vals, results, 'k', 'linewidth', 2)
 hold on 
-boundedline(propA_vals, results2B(1,:), [results2B(1,:)-results2B(2,:);results2B(3,:)- results2B(1,:)]', 'linewidth', 2, 'color', [10, 156, 0]/255, 'alpha', 'transparency', 0.5)
+boundedline(propA_vals, results2B(1,:), [results2B(1,:)-results2B(2,:);results2B(3,:)- results2B(1,:)]', 'linewidth', 2, 'color', [10, 156, 0]/255, 'alpha', 'transparency', 0.3)
 
 
 %xlabel('Proportion of time in environment A')
@@ -127,14 +127,14 @@ ylim([0 .8])
 end
 
 subplot(2,3,1) 
-title('High leakiness (.75)')
+title('No leakiness (0)')
 ylabel('Tree biomass')
 
 subplot(2,3,2)
 title('Moderate leakiness (.25)')
 
 subplot(2,3,3)
-title('No leakiness (0)')
+title('High leakiness (.75)')
 
 subplot(2,3,4) 
 ylabel('Fungal biomass')

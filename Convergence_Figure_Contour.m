@@ -56,6 +56,7 @@ for k = 1:length(env_periods);
      env_period = env_periods(k);
 
      results = nan(length(leakiness_vals), length(propA_vals)); 
+     coexistence_results = nan(length(leakiness_vals), length(propA_vals)); 
      for j = 1:length(propA_vals)
         
         propA = propA_vals(j);
@@ -88,33 +89,11 @@ for i = 1:length(leakiness_vals)
     end
 
     if converged == 0
-    tspan(2) = tspan(2)*5
+        tspan(2) = tspan(2)*5
     end
 
     if tspan(2) > 600000
-         figure(1)
-         b = plot(sol.x, sol.y([1 3 4], :));
-            b(1).Color = [10, 156, 0]/255;
-            %b(2).Color = 'k';
-            b(2).Color = [196/255 118/255 165/255];
-            b(3).Color = [128, 180, 232]/255;
-            %b(5).Color = [214, 71, 90]/255;
-
-            b(1).LineWidth = 2;
-            b(2).LineWidth = 2; 
-            b(3).LineWidth = 2; 
-
-            b(2).LineStyle = '-.';
-            b(3).LineStyle = '--';
-
-            legend({'Tree'; 'Fungus 1'; 'Fungus 2'})
-            %title('F_1 preference')
-
-            xticks([0:365:3000])
-            xticklabels([1:3000/365])
-            xlabel('Years')
-            keyboard
-
+        keyboard
     end
   
     end
@@ -127,33 +106,21 @@ for i = 1:length(leakiness_vals)
     biomass_val = mean(final_res(1,:)); 
 
     results(i,j) = biomass_val ; 
+    coexistence_results(i,j) = coexist; 
 
-    figure(5)
-    subplot(2,length(env_periods),k)
-    hold on 
-    if converged & coexist 
-        scatter(leakiness, propA, 40, biomass_val, 'filled', 'MarkerEdgeColor', 'k')
-    elseif converged & ~coexist
-        scatter(leakiness, propA, 20, biomass_val,  'filled')
-    elseif ~converged & ~coexist 
-        scatter(leakiness, propA, 20, biomass_val, 'd')
-    elseif ~converged & coexist 
-         scatter(leakiness, propA, 40, biomass_val, 'd', 'filled', 'MarkerEdgeColor', 'k')
-    end 
-
-
-   
 end
-
-
-
-     end
+end
 
 figure(5)
 subplot(2,3,k)
+h = pcolor(leakiness_vals, propA_vals, results')
+h.EdgeColor = 'none'; 
+
 xlabel('Leakiness')
 title(num2str(env_periods(k)))
-caxis([0 25]); 
+
+hold on 
+contour(leakiness_vals, propA_vals, coexistence_results','LevelStep', 1,'LineWidth', 2, 'color', 'k')
 
 end
 subplot(2,3,1)
