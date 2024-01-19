@@ -106,7 +106,7 @@ end
 subplot(2,3,col)
 plot(propA_vals, results, 'k', 'linewidth', 2)
 hold on 
-boundedline(propA_vals, results2B(1,:), [results2B(1,:)-results2B(2,:);results2B(3,:)- results2B(1,:)]', 'linewidth', 2, 'color', [10, 156, 0]/255, 'alpha', 'transparency', 0.3)
+boundedline(propA_vals, results2B(1,:), [results2B(1,:)-results2B(2,:);results2B(3,:)- results2B(1,:)]', 'linewidth', 2, 'color', [64,131,159]/255, 'alpha', 'transparency', 0.4)
 
 
 %xlabel('Proportion of time in environment A')

@@ -68,9 +68,10 @@ for i = 1:length(propA_vals)
     if propA == .64; 
         subplot(2,3,3+d)
             b = plot(sol.x, sol.y([1 3 4], :));
-            b(1).Color = [10, 156, 0]/255;
+           % b(1).Color = [10, 156, 0]/255;
+            b(1).Color = [89,174,159]/255;
             %b(2).Color = 'k';
-            b(2).Color = [196/255 118/255 165/255];
+            b(2).Color =  [196/255 118/255 165/255];
             b(3).Color = [128, 180, 232]/255;
             %b(5).Color = [214, 71, 90]/255;
 
@@ -114,10 +115,11 @@ hold on
 boundedline(propA_vals, results2A(1,:), [results2A(1,:)-results2A(2,:); results2A(3,:)-results2A(1,:)]', 'linewidth', 2, 'color', [196/255 118/255 165/255], 'alpha', 'transparency', 0.5)
 boundedline(propA_vals, results2B(1,:), [results2B(1,:)-results2B(2,:);results2B(3,:)- results2B(1,:)]', 'linewidth', 2, 'color', [128, 180, 232]/255, 'alpha', 'transparency', 0.5)
 
+
 xlabel('Proportion of time in environment A')
 %title(['Uptake rates: ' num2str(u1_A) ' and ' num2str(u2_A)])
 ylim([0 18])
-legend({'Bet hedging'; ''; 'F_1 preference'; ''; 'F_2 preference'; ''})
+legend({'Bet hedging'; ''; 'F_1 preference'; ''; 'F_2 preference'; ''; ''})
 
 hold on 
 scatter(0.64, results2A(1, propA_vals == 0.64), 25, [1 1 1], 'filled', 'MarkerEdgeColor', 'k')

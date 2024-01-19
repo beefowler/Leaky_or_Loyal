@@ -2,23 +2,37 @@
  
  clear all
 
+% % set parameter values
+% g = .1; %growth of plant proportional to Nitrogen pool
+% a = .04; %allocation of Carbon to Carbon pool
+% s = 0.01; %senesence of tree biomass
+% l = 0.005; %loss of carbon pool to environment
+% e1 = 0.01; %efficiency of fungus 1 carbon uptake
+% e2 = 0.01; %efficiency of fungus 2 carbon uptake
+% m1 = 0.004; %fungus 1 mortality
+% m2 = 0.004; %fungus 2 mortality
+% u1_A = 1; %uptake of Nitrogen by fungus 1 in environment type A
+% u1_B = 0; %uptake of Nitrogen by fungus 1 in environment type B
+% u2_A = 0; %uptake of Nitrogen by fungus 2 in environment type A
+% u2_B = 1; %uptake of Nitrogen by fungus 1 in environment type B
+% mN = .1; %loss of Nitrogen from tree's stores
+% Ntot = 10; %total nitrogen = N + Ns
+
 % set parameter values
-g = .1; %growth of plant proportional to Nitrogen pool
-a = .04; %allocation of Carbon to Carbon pool
-s = 0.01; %senesence of tree biomass
-l = 0.005; %loss of carbon pool to environment
-e1 = 0.01; %efficiency of fungus 1 carbon uptake
-e2 = 0.01; %efficiency of fungus 2 carbon uptake
-m1 = 0.005; %fungus 1 mortality
-m2 = 0.005; %fungus 2 mortality
+g = rand(1)*.5 
+a = rand(1)*.1 
+s = rand(1)*.1 %senesence of tree biomass
+l = rand(1)*.1 %loss of carbon pool to environment
+e1 = rand(1)*.1 %efficiency of fungus 1 carbon uptake
+e2 = e1; %efficiency of fungus 2 carbon uptake
+m1 = rand(1)*.1 %fungus 1 mortality
+m2 = m1; %fungus 2 mortality
 u1_A = 1; %uptake of Nitrogen by fungus 1 in environment type A
 u1_B = 0; %uptake of Nitrogen by fungus 1 in environment type B
 u2_A = 0; %uptake of Nitrogen by fungus 2 in environment type A
 u2_B = 1; %uptake of Nitrogen by fungus 1 in environment type B
-mN = .1; %loss of Nitrogen from tree's stores
-Ntot = 10; %total nitrogen = N + Ns
-
-
+mN = rand(1)*.1 %loss of Nitrogen from tree's stores
+Ntot = rand(1)*20 %total nitrogen = N + Ns
 
 
 % Set timespan and environment conditions during timespan 
@@ -31,7 +45,6 @@ clf
     u1_B = 1-difference_val; %uptake of Nitrogen by fungus 1 in environment type B
     u2_A = 1-difference_val; %uptake of Nitrogen by fungus 2 in environment type A
     u2_B = difference_val;
-
 
 
 % Initial conditions
@@ -52,6 +65,7 @@ rtot = 0.2;
 
 env_periods = [365/2 365 4*365] ;
 
+%% 
 for k = 1:length(env_periods); 
      env_period = env_periods(k);
 
@@ -66,7 +80,7 @@ for k = 1:length(env_periods);
 for i = 1:length(leakiness_vals)
     leakiness = leakiness_vals(i); 
     converged = 0; 
-    tspan = [1 7000]; 
+    tspan = [1 10000]; 
 
     while converged == 0
 
@@ -108,6 +122,7 @@ for i = 1:length(leakiness_vals)
     results(i,j) = biomass_val ; 
     coexistence_results(i,j) = coexist; 
 
+    
 end
 end
 
@@ -121,6 +136,9 @@ title(num2str(env_periods(k)))
 
 hold on 
 contour(leakiness_vals, propA_vals, coexistence_results','LevelStep', 1,'LineWidth', 2, 'color', [1 1 1], 'LineStyle', '-.')
+
+    keyboard
+
 
 end
 subplot(2,3,1)
@@ -182,14 +200,14 @@ end
 
     subplot(2,2,3)
     title('Low reward rate')
-    ylim([10 19])
+    %ylim([10 19])
         ylabel('Tree biomass')
 xlabel('Leakiness')
 box on 
 
     legend({'1 year'; '3 years'; '5 years'; '7 years'}, 'Location', 'southwest')
     subplot(2,2,4)
-        ylim([14 23])
+        %ylim([14 23])
     xlabel('Leakiness')
     title('High reward rate')
 box on 
