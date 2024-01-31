@@ -150,10 +150,10 @@ title('Low reward rate')
 colorval = cmocean('deep', 6); 
 rtot_vals = [.2 .8]; 
 env_periods = [365 365*3 365*5 365*7];
-for rt = 1:2;
-    rtot = rtot_vals(rt) ;
+for rt = 1:2
+    rtot = rtot_vals(rt);
 
-    for k = 1:length(env_periods);
+    for k = 1:length(env_periods)
         env_period = env_periods(k);
         propA = .5;
         envA_treat = @(t) discretize(rem(t, env_period), [0 propA*env_period env_period]) == 1 ;
@@ -195,22 +195,3 @@ box on
     xlabel('Leakiness')
     title('High reward rate')
 box on 
-
-    %
-    % %
-    % figure(4)
-    % b = plot(sol.x, sol.y([1 3 4], :));
-    % b(1).Color = [10, 156, 0]/255;
-     % %b(2).Color = 'k';
-     % b(2).Color = [196/255 118/255 165/255];
-     % b(3).Color = [128, 180, 232]/255;
-     % %b(5).Color = [214, 71, 90]/255;
-     % 
-     % b(1).LineWidth = 2;
-     % b(2).LineWidth = 2;
-     % b(3).LineWidth = 2;
-     % 
-     % b(2).LineStyle = '-.';
-     % b(3).LineStyle = '--';
-     % 
-     % 

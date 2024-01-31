@@ -2,47 +2,31 @@
  
  clear all
 
-% % set parameter values
-% g = .1; %growth of plant proportional to Nitrogen pool
-% a = .04; %allocation of Carbon to Carbon pool
-% s = 0.01; %senesence of tree biomass
-% l = 0.005; %loss of carbon pool to environment
-% e1 = 0.01; %efficiency of fungus 1 carbon uptake
-% e2 = 0.01; %efficiency of fungus 2 carbon uptake
-% m1 = 0.004; %fungus 1 mortality
-% m2 = 0.004; %fungus 2 mortality
-% u1_A = 1; %uptake of Nitrogen by fungus 1 in environment type A
-% u1_B = 0; %uptake of Nitrogen by fungus 1 in environment type B
-% u2_A = 0; %uptake of Nitrogen by fungus 2 in environment type A
-% u2_B = 1; %uptake of Nitrogen by fungus 1 in environment type B
-% mN = .1; %loss of Nitrogen from tree's stores
-% Ntot = 10; %total nitrogen = N + Ns
-
 % set parameter values
-g = rand(1)*.5 
-a = rand(1)*.1 
-s = rand(1)*.1 %senesence of tree biomass
-l = rand(1)*.1 %loss of carbon pool to environment
-e1 = rand(1)*.1 %efficiency of fungus 1 carbon uptake
-e2 = e1; %efficiency of fungus 2 carbon uptake
-m1 = rand(1)*.1 %fungus 1 mortality
-m2 = m1; %fungus 2 mortality
+g = .1; %growth of plant proportional to Nitrogen pool
+a = .04; %allocation of Carbon to Carbon pool
+s = 0.01; %senesence of tree biomass
+l = 0.005; %loss of carbon pool to environment
+e1 = 0.01; %efficiency of fungus 1 carbon uptake
+e2 = 0.01; %efficiency of fungus 2 carbon uptake
+m1 = 0.004; %fungus 1 mortality
+m2 = 0.004; %fungus 2 mortality
 u1_A = 1; %uptake of Nitrogen by fungus 1 in environment type A
 u1_B = 0; %uptake of Nitrogen by fungus 1 in environment type B
 u2_A = 0; %uptake of Nitrogen by fungus 2 in environment type A
 u2_B = 1; %uptake of Nitrogen by fungus 1 in environment type B
-mN = rand(1)*.1 %loss of Nitrogen from tree's stores
-Ntot = rand(1)*20 %total nitrogen = N + Ns
+mN = .1; %loss of Nitrogen from tree's stores
+Ntot = 10; %total nitrogen = N + Ns
 
 
-% Set timespan and environment conditions during timespan 
+% Set timespan and environment conditions during timespan
 
 figure
-    difference_val = 1;
-    u1_A = difference_val; %uptake of Nitrogen by fungus 1 in environment type A
-    u1_B = 1-difference_val; %uptake of Nitrogen by fungus 1 in environment type B
-    u2_A = 1-difference_val; %uptake of Nitrogen by fungus 2 in environment type A
-    u2_B = difference_val;
+difference_val = 1;
+u1_A = difference_val; %uptake of Nitrogen by fungus 1 in environment type A
+u1_B = 1-difference_val; %uptake of Nitrogen by fungus 1 in environment type B
+u2_A = 1-difference_val; %uptake of Nitrogen by fungus 2 in environment type A
+u2_B = difference_val;
 
 %%
 % Initial conditions

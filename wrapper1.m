@@ -170,7 +170,6 @@ for i = 1:length(leakiness_vals)
         results(j,i) = mean(final_res(1,:));
     end
 
-
 end
 
 figure
